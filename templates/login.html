@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>CSCI2020</title>
+        <link rel = "stylesheet" href = "/static/login.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src = "/static/login.js" ></script>
+    </head>
+    <body>        
+        <div class = "form">
+            <div class = "form-title"><img src = "/static/ontariotech.png" alt=""></div>
+            <div class = "form-container">
+                <h1 class = "login-title">Login</h1>
+                <h1 class = "register-title">Register</h1>
+
+                <form class = "login-form" action = '/login' method = "post">
+                    <div class = "login-info" id = "username-info">
+                        <input id = "username" name = "username" type = "username" required>
+                        <label for = "username">Username</label>
+                    </div>
+                    <div class = "login-info" id = "password-info">
+                        <input id = "password" name = "password" type = "password" required>
+                        <label for = "password">Password</label>
+                    </div>
+                    <div class = "login-info" id = "reenter-password-info">
+                        <input id = "reenter-password" name = "reenter-password" type = "password">
+                        <label for = "reenter-password">Re-enter Password</label>
+                    </div>
+                    <div class = "register-info" id = "account-type">
+                        <label>Account Type:</label>
+                        <select class = "account-type" name = "account-type" id ="account-type">
+                            <option value = "private" selected>Private</option>
+                            <option value = "public">Public</option>
+                        </select>
+                    </div>
+                    
+                    <div class = "login-link">
+                        Have an account? Login <a class = "login"> here</a>
+                    </div>
+                    <div class = "register-link">
+                        Don't have an account? Register <a class = "register">here</a>
+                    </div>
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class = "message">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <input type = "submit" value = "Login" class = "button" id = "login-button"></input>
+                    <input type = "submit" value = "Register" class = "button" id = "register-button"></input>
+                </form>
+            </div>
+        </div>
+        <div class = "background" id = "background1"></div>
+        <div class = "background" id = "background2"></div>
+        <div class = "background" id = "background3"></div>
+        <div class = "background" id = "background4"></div>
+        <div class = "background" id = "background5"></div>
+    </body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>CSCI2020</title>
+        <link rel = "stylesheet" href = "/static/index.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://kit.fontawesome.com/0c7c27ff53.js" crossorigin="anonymous"></script>
+        <script src="/static/index.js"></script>
+    </head>
+    <body>        
+        <div class = "header">
+            <div class = "userProfile">
+                <img src = "/static/profilePic.svg" alt = ""></img>
+                <label class = "username">{{ username }}</label>
+            </div>
+            <input class = "searchBar" type="text" placeholder="Search">
+
+            <div class = "headerLinks">
+                <a href = "/">HOME</a>
+                <a href = "/displayProfile">VIEW PROFILE</a>
+                <a href = "/addPost">ADD POST</a>
+                {% if userType == "private" %}
+                    <a href = "#requestContainer">FOLLOW REQUEST</a>
+                    <div class = "requestContainer" id = "requestContainer">
+                        <a href = "#" class = "requestClose">&times;</a>
+                        {% for username1 in requests %}
+                            <div class = "request">
+                                <label id = "">{{ username1 }} wants to follow you!</label>
+                                <button class = "acceptRequest1">Accept</button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <a href = "/logout">LOGOUT</a>
+            </div>
+        </div>
+        <div class = "postContainer">
+            {% if data %}
+                {% if numPosts != 0 %}
+                    
+                    {% for id, image, caption, username, likes, comments in data %}
+                        <div class = "post" id = "{{ id }}">
+                            <label class = "postUsername">{{ username }}</label>
+                            <img src="data:;base64,{{ image }}" alt=""/>
+                            <div class = "react"></i>
+                                {% if id in likePosts %}
+                                    <i class="fas fa-heart" style = "color:red"></i>
+                                {% else %}
+                                    <i class="fas fa-heart" style = "color:black"></i>
+                                {% endif %}
+                                <i class="far fa-comment"></i>
+                            </div>
+                            <div class = "caption"><label class = "postUsername">{{ username }}</label><label> {{ caption }}</label></div>
+                            <label>Liked by <label class="numLikes"> {{ likes }} </label> others</label>
+
+                            {% for comment in comments %}
+                                <div class = "comment"><label class = "postUsername">{{ comment.username }}</label><label> {{ comment.comment }}</label></div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class = "post">
+                        <label>No posts to view. Follow to view posts</label>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </body>
+</html>

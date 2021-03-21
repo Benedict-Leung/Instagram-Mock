@@ -1,0 +1,267 @@
+@import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: Fjalla One;
+}
+
+body {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin-top: 0;
+    background-color: #ECECEC;
+}
+
+.header {
+    width: 100%;
+    height: 7vh;
+    background-color: #ECECEC;
+    padding: 1vh;
+    display: flex;
+    flex-flow: column wrap;
+    position: sticky;
+    top: 0;
+}
+
+.headerLinks > a {
+    height: 100%;
+    color: #000;
+    text-decoration: none;
+    font: 1vw Fjalla One;
+    margin: 0 1vw;
+    padding: 0.5vh 0.5vh;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*This makes the two lines surrounding the link. One top and one bottom*/
+.headerLinks > a:before, .headerLinks > a:after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 2vw;
+    background: transparent;
+    content: "";
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.headerLinks > a:before {
+    border-top: 0.15vw solid #000;
+    transform: translateX(-50%) translateY(-30%);
+}
+
+.headerLinks > a:after {
+    border-bottom: 0.15vw solid #000;
+    transform: translateX(-50%) translateY(-70%);
+}
+
+.headerLinks > a:hover:before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.headerLinks > a:hover:after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.header img {
+    width: auto;
+    height: 100%
+}
+
+.headerLinks {
+    width: 40vw;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: flex-end;
+}
+
+.userProfile {
+    width: 8vw;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-start;
+}
+
+.searchBar {
+    width: 25vw;
+    height: 100%;
+    font-family: Raleway;
+    padding-left: 5vh;
+    border: none;
+    border-radius: 5vh;
+    background-color: #D3D3D3;
+    outline: none;
+}
+
+.postContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 25vw;
+    margin-right: 25vw;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.post {
+    width: 100%;
+    background-color: #FFF;
+    margin-bottom: 2vw;
+    padding: 3vw;
+    border-radius: 5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.post label, .post b {
+    margin-bottom: 1vw;
+    font-family: Raleway;
+    text-align: center;
+    align-self: flex-start;
+}
+
+.post div:last-child, .post label:last-child {
+    margin-bottom: 0;
+}
+
+.post .postUsername {
+    font-weight: bold;
+}
+
+.post .react {
+    margin: 1vw 0 1vw 0;
+    align-self: flex-start;
+}
+
+.post .react i {
+    font-size: 2rem;
+    margin-right: 1vw;
+    cursor: pointer;
+}
+
+.post .caption {
+    margin-bottom: 1vw;
+    align-self: flex-start;
+    font-family: Raleway;
+}
+
+.post img {
+    display: block;
+    max-width: 42vw;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.post .newComment {
+    width: 100%;
+    font-family: Raleway;
+    padding: 0.5vw;
+}
+
+.comment {
+    align-self: flex-start;
+}
+
+.searchResults {
+    width: 25vw;
+    background-color: #FFF;
+    padding: 1vw;
+    padding-top: 5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    left: 16.5vw;
+    top: 1vh;
+    border: 2px solid #D3D3D3;
+    border-radius: 3vh;
+    z-index: -1;
+}
+
+.searchResults label {
+    width: 100%;
+    padding: 0.5vw;
+    cursor: pointer;
+}
+
+.searchResults label:hover {
+    background-color: #ECECEC;
+}
+
+.searchResults label:not(:last-child){
+    border-bottom: 2px solid #D3D3D3;
+}
+
+.requestContainer {
+    width: 25vw;
+    height: 93vh;
+    background-color: #FFF;
+    padding: 1vw;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    right: -26vw;
+    top: 7vh;
+    border: 2px solid #D3D3D3;
+    border-radius: 3vh;
+    overflow-y: auto;
+    transition: ease-in-out 0.3s;
+}
+
+.requestContainer:target {
+    right: 0;
+}
+
+.requestContainer .requestClose {
+    background-color: #FFF;
+    position: sticky;
+    top: 0;
+    text-align: end;
+    font-size: 5vh;
+    text-decoration: none;
+}
+
+.requestContainer .request {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1vw;
+    border-bottom: 2px solid #D3D3D3;
+}
+
+.requestContainer .request label {
+
+    flex-grow: 2;
+}
+
+.requestContainer .request button {
+    width: 20%;
+    height: 100%;
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0.3vw;
+    border-radius: 1vw;
+    color: #FFF;
+    background-color: #0077CA;
+}
+
+.requestContainer .request button:hover {
+    background-color: #003C71;
+    cursor: pointer;
+}

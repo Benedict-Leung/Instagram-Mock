@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>CSCI2020</title>
+        <link rel = "stylesheet" href = "/static/index.css">
+        <link rel = "stylesheet" href = "/static/displayProfile.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://kit.fontawesome.com/0c7c27ff53.js" crossorigin="anonymous"></script>
+        <script src="/static/index.js"></script>
+        <script src="/static/displayProfile.js"></script>
+    </head>
+    <body>        
+        <div class = "header">
+            <div class = "userProfile">
+                <img src = "/static/profilePic.svg" alt = ""></img>
+                <label class = "username">{{ username }}</label>
+            </div>
+            <input class = "searchBar" type="text" placeholder="Search">
+           
+            <div class = "headerLinks">
+                <a href = "/">HOME</a>
+                <a href = "/displayProfile">VIEW PROFILE</a>
+                <a href = "/addPost">ADD POST</a>
+                {% if userType == "private" %}
+                    <a href = "">FOLLOW REQUEST</a>
+                {% endif %}
+                <a href = "/logout">LOGOUT</a>
+            </div>
+        </div>
+        <div class = "profileInfo">
+            <div class = "profilePicture">
+                <img src = "/static/profilePic.svg" alt = ""></img>
+                <label class = "profileName">{{ usernameDisplay }}</label>
+            </div>
+            <div class = "statsContainer">
+                <div class = "stats" id = "numPosts">
+                    <label>{{ numPosts  }}</label>
+                    <label>Posts</label>
+                </div>
+                <div class = "stats" id = "followers">
+                    <label>{{ numFollowers }}</label>
+                    <label>Followers</label>
+                </div>
+                <div class = "stats" id = "following">
+                    <label>{{ numFollowing }}</label>
+                    <label>Following</label>
+                </div>
+                {% if ifFollowed %}
+                    <button class = "follow">Unfollow</button>
+                {% elif requestSent == True %}
+                    <button class = "follow">Request Sent</button>
+                {% elif username != usernameDisplay %}
+                    <button class = "follow">Follow</button>
+                {% endif %}
+            </div>
+            
+        </div>
+        <div class = "postContainer">
+            {% if data %}
+                {% if numPosts != 0 %}
+                    {% for id, image, caption, username, likes, comments in data %}
+                        <div class = "post" id = "{{ id }}">
+                            <label class = "postUsername">{{ username }}</label>
+                            <img src="data:;base64,{{ image }}" alt=""/>
+                            <div class = "react"></i>
+                                {% if id in likePosts %}
+                                    <i class="fas fa-heart" style = "color:red"></i>
+                                {% else %}
+                                    <i class="fas fa-heart" style = "color:black"></i>
+                                {% endif %}
+                                <i class="far fa-comment"></i>
+                            </div>
+                            <div class = "caption"><label class = "postUsername">{{ username }}</label><label> {{ caption }}</label></div>
+                            <label>Liked by <label class="numLikes"> {{ likes }} </label> others</label>
+
+                            {% for comment in comments %}
+                                <div class = "comment"><label class = "postUsername">{{ comment.username }}</label><label> {{ comment.comment }}</label></div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class = "post">
+                        <label>No posts. Click add post to share your first post.</label>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class = "post">
+                    <label><b>This profile is private.</b> Follow to view their photos</label>
+                </div>
+            {% endif %}
+        </div>
+    </body>
+</html>
