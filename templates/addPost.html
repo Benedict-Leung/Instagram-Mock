@@ -3,22 +3,58 @@
     <head>
         <title>CSCI2020</title>
         <link rel = "stylesheet" href = "/static/index.css">
+        <link rel = "stylesheet" href = "/static/addPost.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="/static/index.js"></script>
+        <script src="/static/addPost.js"></script>
     </head>
     <body>        
-        <div class = "header" id = "header">
+        <div class = "header">
+            <div class = "userProfile">
+                <img src = "/static/profilePic.svg" alt = ""></img>
+                <label class = "username">{{ username }}</label>
+            </div>
             <input class = "searchBar" type="text" placeholder="Search">
-            <a href = "/login">HOME</a>
-            <a href = "/viewProfile">VIEW PROFILE</a>
-            <a href = "/addPost">ADD POST</a>  
-            
-            <a href = "/logout">LOGOUT</a>
+
+            <div class = "headerLinks">
+                <a href = "/">HOME</a>
+                <a href = "/displayProfile">VIEW PROFILE</a>
+                <a href = "/addPost">ADD POST</a>
+                {% if userType == "private" %}
+                    <a href = "#requestContainer">FOLLOW REQUEST</a>
+                    <div class = "requestContainer" id = "requestContainer">
+                        <a href = "#" class = "requestClose">&times;</a>
+                        {% if requests|length != 0 %}
+                            {% for username1 in requests %}
+                                <div class = "request">
+                                    <label>{{ username1 }} wants to follow you!</label>
+                                    <button id = "{{ username1 }}" class = "acceptRequest">Accept</button>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class = "request">
+                                <label>No requests</label>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                <a href = "/logout">LOGOUT</a>
+            </div>
         </div>
 
-        <form method=post enctype=multipart/form-data>
-            <input name = "image" type=file name=file>
-            <input name = "caption" type = "text">
-            <input type=submit value=Upload>
-        </form>
+        <div class = "uploadContainer">
+            <form class = "upload" method = post enctype = multipart/form-data>
+                <div class = "preview">
+                    <div class = "imageContainer">
+                        <img alt = "Choose an image to upload" />
+                    </div>
+                </div>
+                <input class = "uploadImage" name = "image" type = file id = "image" accept = "image/*" required>
+                <label for = "image">Choose a file</label>
+                <input class = "caption" name = "caption" type = "text" placeholder = "Enter Caption">
+                <input class = "submit" type = submit value = Upload>
+            </form>
+        </div>
+        
     </body>
 </html>

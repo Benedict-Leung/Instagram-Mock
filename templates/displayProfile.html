@@ -22,7 +22,22 @@
                 <a href = "/displayProfile">VIEW PROFILE</a>
                 <a href = "/addPost">ADD POST</a>
                 {% if userType == "private" %}
-                    <a href = "">FOLLOW REQUEST</a>
+                    <a href = "#requestContainer">FOLLOW REQUEST</a>
+                    <div class = "requestContainer" id = "requestContainer">
+                        <a href = "#" class = "requestClose">&times;</a>
+                        {% if requests|length != 0 %}
+                            {% for username1 in requests %}
+                                <div class = "request">
+                                    <label>{{ username1 }} wants to follow you!</label>
+                                    <button id = "{{ username1 }}" class = "acceptRequest">Accept</button>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class = "request">
+                                <label>No requests</label>
+                            </div>
+                        {% endif %}
+                    </div>
                 {% endif %}
                 <a href = "/logout">LOGOUT</a>
             </div>

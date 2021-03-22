@@ -1,0 +1,101 @@
+.uploadContainer {
+    height: 92vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF;
+    margin-left: 25vw;
+    margin-right: 25vw;
+    border-radius: 5vw;
+}
+
+.uploadContainer form {
+    width: 100%;
+    height: 100%;
+    background-color: #FFF;
+    padding: 2vw;
+    border-radius: 5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.uploadContainer form input {
+    margin-bottom: 1vw;
+}
+
+.uploadContainer form .uploadImage {
+    display: none;
+}
+
+.uploadContainer form .uploadImage + label {
+    width: 10vw;
+    color: #FFF;
+    padding: 0.5vw;
+    margin-bottom: 1vw;
+    background-color: #0077CA;
+    font-family: Raleway;
+    text-align: center;
+    border-radius: 5vh;
+}
+
+.uploadContainer form .uploadImage:focus + label,
+.uploadContainer form .uploadImage + label:hover {
+    background-color: #003C71;
+    cursor: pointer;
+}
+
+.uploadContainer form .preview {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1vw;
+    border: 2px solid #D3D3D3;
+    border-radius: 5vh;
+    margin-bottom: 1vw;
+}
+
+.uploadContainer form .preview .imageContainer {
+    overflow: hidden;
+}
+
+.uploadContainer form .preview img {
+    max-width: 42vw;
+    height: auto;
+}
+
+.uploadContainer form .preview .imageContainer img[alt] {
+    margin-left: -16px;
+    text-indent: 16px;
+}
+
+.uploadContainer .caption {
+    width: 25vw;
+    height: 5vh;
+    font-family: Raleway;
+    padding: 0.5vw;
+    padding-left: 5vh;
+    border: none;
+    border-radius: 5vh;
+    background-color: #D3D3D3;
+    outline: none;
+}
+
+.uploadContainer form .submit {
+    width: 25vw;
+    height: 5vh;
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0.5vw;
+    border-radius: 5vh;
+    color: #FFF;
+    background-color: #0077CA;
+}
+
+.uploadContainer form .submit:hover {
+    cursor: pointer;
+    background-color: #003C71;
+}

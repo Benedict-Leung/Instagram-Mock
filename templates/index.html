@@ -23,12 +23,18 @@
                     <a href = "#requestContainer">FOLLOW REQUEST</a>
                     <div class = "requestContainer" id = "requestContainer">
                         <a href = "#" class = "requestClose">&times;</a>
-                        {% for username1 in requests %}
+                        {% if requests|length != 0 %}
+                            {% for username1 in requests %}
+                                <div class = "request">
+                                    <label>{{ username1 }} wants to follow you!</label>
+                                    <button id = "{{ username1 }}" class = "acceptRequest">Accept</button>
+                                </div>
+                            {% endfor %}
+                        {% else %}
                             <div class = "request">
-                                <label id = "">{{ username1 }} wants to follow you!</label>
-                                <button class = "acceptRequest1">Accept</button>
+                                <label>No requests</label>
                             </div>
-                        {% endfor %}
+                        {% endif %}
                     </div>
                 {% endif %}
                 <a href = "/logout">LOGOUT</a>

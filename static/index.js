@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    let username = $(".username").text()
+
     $(".searchBar").on("keyup",function () {
         if ($(this).val() != "") {
             $.ajax({
@@ -82,7 +84,7 @@ $(document).ready(function () {
             $(this).parent().parent().append(newComment);
             
             newComment.on("keyup", function(e) {
-                if (e.key === 'Enter') {
+                if (e.key === "Enter") {
                     $.ajax({
                         url: "/addComment",
                         type: "POST",
@@ -101,18 +103,18 @@ $(document).ready(function () {
 
     $(".acceptRequest").click(function () {
         let a = $(this)
-        a.addClass('disabled');
         
-        if (!a.hasClass('disabled')) {
+        if (!a.hasClass("disabled")) {
+            a.addClass("disabled");
             $.ajax({
-                url: '/acceptRequest',
-                type: 'POST',
+                url: "/acceptRequest",
+                type: "POST",
                 data: {
-                    profileName: $(".username").text(),
-                    username: username
+                    profileName: username,
+                    username: a.attr("id")
                 },
-                success: function(r) {
-                    a.removeClass('disabled');
+                success: function() {
+                    a.parent().remove();
                 }
             })
         }

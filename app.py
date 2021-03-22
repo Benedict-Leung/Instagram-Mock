@@ -56,6 +56,18 @@ class User(Base):
     
     def getLikePosts(self):
         return self.likePosts
+    
+    def getFollowers(self):
+        return self.followers
+    
+    def getFollowing(self):
+        return self.following
+    
+    def follow(self, user):
+        self.following.append(user)
+    
+    def unFollow(self, user):
+        self.getFollowing().remove(user)
 
 
 
@@ -93,6 +105,12 @@ class Post(Base):
     
     def getComments(self):
         return self.comments
+    
+    def addLike(self, user):
+        return self.likes.append(user)
+    
+    def removeLike(self, user):
+        return self.likes.remove(user)
 
 
 
@@ -146,7 +164,6 @@ def parseRequests(user):
 
     for request in requests:
         usernames.append(request.getUsername())
-    print(user.getUserName())
     return usernames
 
 @app.route("/")
@@ -156,7 +173,8 @@ def home():
     else:
         user = db_session.query(User).filter(User.username == session.get("username")).first()
         usertype = user.getType()
-        follow = user.following
+        requests = None
+        follow = user.getFollowing()
         
         ids, images, captions, usernames, likes, likePosts, comments = [], [], [], [], [], user.getLikePosts(), []
 
@@ -177,7 +195,7 @@ def home():
 
         if usertype == "private":
             requests = parseRequests(user)
-            print(requests)
+            
         return render_template("index.html",
                                 username = session.get("username"),
                                 numPosts = len(ids),
@@ -230,7 +248,14 @@ def login():
 @app.route("/addPost", methods=["POST", "GET"])
 def addPost():
     if request.method == "GET":
-        return render_template("addPost.html")
+        user = db_session.query(User).filter(User.username == session.get("username")).first()
+        usertype = user.getType()
+        requests = None
+
+        if usertype == "private":
+            requests = parseRequests(user)
+
+        return render_template("addPost.html", username = user.getUserName(), userType = usertype, requests = requests)
     elif request.method == "POST":
         username = session.get("username")
         image = request.files["image"]
@@ -240,7 +265,7 @@ def addPost():
         db_session.add(newPost)
         db_session.commit()
 
-    return redirect("/",)
+    return redirect("/displayProfile")
 
 
 
@@ -250,7 +275,7 @@ def addLike():
         postid = request.form.get("id") 
         user = db_session.query(User).filter(User.username == str(session.get("username"))).first()
         post = db_session.query(Post).filter(Post.id == postid).first()
-        post.likes.append(user)
+        post.addLike(user)
         db_session.commit()
 
         return "success"
@@ -263,7 +288,7 @@ def removeLike():
         postid = request.form.get("id") 
         user = db_session.query(User).filter(User.username == str(session.get("username"))).first()
         post = db_session.query(Post).filter(Post.id == postid).first()
-        post.likes.remove(user)
+        post.removeLike(user)
         db_session.commit()
 
         return "success"
@@ -298,8 +323,7 @@ def follow():
         profile = db_session.query(User).filter(User.username == request.form.get("profileName")).first()
 
         if profile.getType() == "public":
-            profile.followers.append(user)
-            user.following.append(profile)
+            user.follow(profile)
             db_session.commit()
             return "Unfollow"
         else:
@@ -315,7 +339,7 @@ def unfollow():
         user = db_session.query(User).filter(User.username == request.form.get("username")).first()
         profile = db_session.query(User).filter(User.username == request.form.get("profileName")).first()
 
-        profile.followers.remove(user)
+        user.unFollow(profile)
 
         db_session.commit()
     return "Follow"
@@ -338,13 +362,14 @@ def removeRequest():
 def displayProfile():
     user = db_session.query(User).filter(User.username == session.get("username")).first()
     userToDisplay = None
+    requests = None
 
     if request.method == "POST":
         userToDisplay = db_session.query(User).filter(User.username == request.form.get("username")).first()        
     elif request.method == "GET":
         userToDisplay = user
 
-    if userToDisplay.getType() == "public" or user in userToDisplay.followers or userToDisplay.getUserName() == user.getUserName():
+    if userToDisplay.getType() == "public" or user in userToDisplay.getFollowers() or userToDisplay.getUserName() == user.getUserName():
         posts = userToDisplay.getPosts()
 
         ids, images, captions, usernames, likes, likePosts, comments = [], [], [], [], [], user.getLikePosts(), []
@@ -370,9 +395,9 @@ def displayProfile():
                                 numPosts = len(ids),
                                 data = zip(ids, images, captions, usernames, likes, comments),
                                 likePosts = [post.id for post in likePosts],
-                                numFollowers = len(userToDisplay.followers),
-                                numFollowing = len(userToDisplay.following),
-                                ifFollowed = userToDisplay in user.following,
+                                numFollowers = len(userToDisplay.getFollowers()),
+                                numFollowing = len(userToDisplay.getFollowing()),
+                                ifFollowed = userToDisplay in user.getFollowing(),
                                 requests = requests,
                                 userType = user.getType())
     else :
@@ -382,11 +407,31 @@ def displayProfile():
                                 username = session.get("username"),
                                 usernameDisplay = userToDisplay.getUserName(),
                                 numPosts = len(userToDisplay.getPosts()),
-                                numFollowers = len(userToDisplay.followers),
-                                numFollowing = len(userToDisplay.following),
+                                numFollowers = len(userToDisplay.getFollowers()),
+                                numFollowing = len(userToDisplay.getFollowing()),
                                 requestSent = requestexists is not None,
                                 userType = user.getType())
 
+
+
+@app.route("/acceptRequest", methods=["POST", "GET"])
+def acceptRequest():
+    if request.method == "POST":
+        profileName = request.form.get("profileName")
+        username = request.form.get("username")
+        profileRequest = db_session.query(Request).filter(Request.profile == profileName, Request.username == username).first()
+        
+        if profileRequest:
+            user = db_session.query(User).filter(User.username == username).first()
+            profile = db_session.query(User).filter(User.username == profileName).first()
+
+            db_session.delete(profileRequest)
+            user.follow(profile)
+
+            db_session.commit()
+
+            return "Success"
+    return ""
 
 
 @app.route("/logout")
