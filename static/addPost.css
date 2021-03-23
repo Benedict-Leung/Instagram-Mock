@@ -1,10 +1,9 @@
-.uploadContainer {
+.uploadContainer, .photoContainer {
     height: 92vh;
     display: flex;
     flex-direction: column;
     background-color: #FFF;
-    margin-left: 25vw;
-    margin-right: 25vw;
+    margin: 0 25vw 1vw 25vw;
     border-radius: 5vw;
 }
 
@@ -20,7 +19,7 @@
     align-items: center;
 }
 
-.uploadContainer form input {
+.uploadContainer form input, .photoContainer input {
     margin-bottom: 1vw;
 }
 
@@ -28,19 +27,24 @@
     display: none;
 }
 
-.uploadContainer form .uploadImage + label {
+.uploadContainer form .uploadImage + label, .photoContainer button {
     width: 10vw;
     color: #FFF;
     padding: 0.5vw;
     margin-bottom: 1vw;
     background-color: #0077CA;
-    font-family: Raleway;
+    font: 0.9rem Raleway;
     text-align: center;
     border-radius: 5vh;
+    border: none;
+    outline: none;
 }
 
 .uploadContainer form .uploadImage:focus + label,
-.uploadContainer form .uploadImage + label:hover {
+.uploadContainer form .uploadImage + label:hover,
+.uploadContainer form .submit:hover,
+.photoContainer .cameraSubmit:hover,
+.photoContainer .cameraButton:hover {
     background-color: #003C71;
     cursor: pointer;
 }
@@ -71,7 +75,7 @@
     text-indent: 16px;
 }
 
-.uploadContainer .caption {
+.uploadContainer .caption, .photoContainer .caption {
     width: 25vw;
     height: 5vh;
     font-family: Raleway;
@@ -83,7 +87,7 @@
     outline: none;
 }
 
-.uploadContainer form .submit {
+.uploadContainer form .submit, .photoContainer .cameraSubmit {
     width: 25vw;
     height: 5vh;
     border: none;
@@ -91,11 +95,58 @@
     margin: 0;
     padding: 0.5vw;
     border-radius: 5vh;
+    font-size: 0.9rem;
     color: #FFF;
     background-color: #0077CA;
 }
 
-.uploadContainer form .submit:hover {
-    cursor: pointer;
+.photoContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2vw;
+}
+
+.streamContainer {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 1vw;
+    border: 2px solid #D3D3D3;
+    border-radius: 5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttonContainer {
+    width: 25vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1vw;
+}
+
+.buttonContainer button {
+    color: #FFF;
+    font-family: Raleway;
+    background-color: #0077CA;
+    padding: 0.5vw 1vw 0.5vw 1vw;
+    border: none;
+    border-radius: 5vh;
+}
+
+.buttonContainer button:hover {
     background-color: #003C71;
+    cursor: pointer;
+}
+
+#stream, #capture, #snapshot img {
+    width: 42vw;
+    height: auto;
+}
+
+#capture {
+    display: none;
 }

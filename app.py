@@ -2,9 +2,8 @@ from flask import Flask, flash, render_template, request, session, redirect, jso
 from sqlalchemy import create_engine, Column, Integer, String, LargeBinary, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker, scoped_session
-import os, base64
-
 from sqlalchemy.sql.schema import ForeignKey
+import os, base64
 
 engine = create_engine("sqlite:///assignment.db", echo=True)
 Base = declarative_base()
@@ -23,6 +22,15 @@ followTable = Table(
 
 
 
+'''
++---------------+---------------+---------------+---------------+---------------+---------------+---------------+
+|   Username    |   Password    |     Type      |     Posts     |   LikePosts   |   Following   |   Followers   |
++---------------+---------------+---------------+---------------+---------------+---------------+---------------+
+|     userA     |     userA     |     public    |       []      |       []      |       []      |       []      |
++---------------+---------------+---------------+---------------+---------------+---------------+---------------+
+|     userB     |     userB     |    private    |       []      |       []      |       []      |       []      |
++---------------+---------------+---------------+---------------+---------------+---------------+---------------+
+'''
 class User(Base):
     __tablename__ = "users"
 
@@ -71,6 +79,17 @@ class User(Base):
 
 
 
+'''
++---------------+---------------+---------------+---------------+---------------+---------------+
+|       ID      |    Username   |     Image     |     Caption   |     Likes     |    Comments   |
++---------------+---------------+---------------+---------------+---------------+---------------+
+|       1       |     userA     |      ...      |   "Foo bar"   |       []      |       []      |
++---------------+---------------+---------------+---------------+---------------+---------------+
+|       2       |     userB     |      ...      | "Hello World" |       []      |       []      |
++---------------+---------------+---------------+---------------+---------------+---------------+
+|       3       |     userB     |      ...      |       ""      |       []      |       []      |
++---------------+---------------+---------------+---------------+---------------+---------------+
+'''
 class Post(Base):
     __tablename__ = "posts"
 
@@ -114,6 +133,17 @@ class Post(Base):
 
 
 
+'''
++---------------+---------------+---------------+---------------+
+|       ID      |     postID    |    Username   |    Comment    |
++---------------+---------------+---------------+---------------+
+|       1       |       3       |     userA     |      "Hi"     |
++---------------+---------------+---------------+---------------+
+|       2       |       3       |     userB     |     "Nice"    |
++---------------+---------------+---------------+---------------+
+|       3       |       1       |     userB     |     "Wow!"    |
++---------------+---------------+---------------+---------------+
+'''
 class Comment(Base):
     __tablename__ = "comments"
 
@@ -138,6 +168,13 @@ class Comment(Base):
 
 
 
+'''
++---------------+---------------+---------------+
+|       ID      |    Username   |     Profile   |
++---------------+---------------+---------------+
+|       1       |     userA     |     userB     |
++---------------+---------------+---------------+
+'''
 class Request(Base):
     __tablename__ = "requests"
 
@@ -153,10 +190,10 @@ class Request(Base):
         return self.username
 
 
+
 Base.metadata.create_all(engine)
 
 app = Flask(__name__)
-
 
 def parseRequests(user):
     requests = db_session.query(Request).filter(Request.profile == user.getUserName()).all()
@@ -165,6 +202,8 @@ def parseRequests(user):
     for request in requests:
         usernames.append(request.getUsername())
     return usernames
+
+
 
 @app.route("/")
 def home():
