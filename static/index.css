@@ -228,10 +228,12 @@ body {
 }
 
 .requestContainer .requestClose {
+    width: max-content;
     color: #000;
     background-color: #FFF;
     position: sticky;
     top: 0;
+    left: 100%;
     text-align: end;
     font-size: 5vh;
     text-decoration: none;
@@ -246,7 +248,6 @@ body {
 }
 
 .requestContainer .request label {
-
     flex-grow: 2;
 }
 
