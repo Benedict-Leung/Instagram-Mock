@@ -1,4 +1,4 @@
-# CSCI2020Group
+# CSCI2040Group
 
 ## Prerequisite
 ```bash
