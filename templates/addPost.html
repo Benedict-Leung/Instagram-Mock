@@ -41,34 +41,39 @@
                 <a href = "/logout">LOGOUT</a>
             </div>
         </div>
-
-        <div class = "uploadContainer">
-            <form class = "upload" method = post enctype = multipart/form-data>
-                <div class = "preview">
-                    <div class = "imageContainer">
-                        <img alt = "Choose an image to upload" />
+        <div class = "addOption">
+            <a id = "uploadButton" class = "active" href = "#uploadContainer">Upload a photo</a>
+            <a id = "takeButton" href = "#photoContainer">Take a photo</a>
+        </div>
+        <div class = "addPostContainer">
+            <div class = "uploadContainer" id = "uploadContainer">
+                <form class = "upload" method = post enctype = multipart/form-data>
+                    <div class = "preview">
+                        <div class = "imageContainer">
+                            <img alt = "Choose an image to upload" />
+                        </div>
+                    </div>
+                    <input class = "uploadImage" name = "image" type = file id = "image" accept = "image/*" required>
+                    <label for = "image">Choose a file</label>
+                    <input class = "caption" name = "caption" type = "text" placeholder = "Enter Caption">
+                    <input class = "submit" type = submit value = Upload>
+                </form>
+            </div>
+    
+            <div class = "photoContainer"  id = "photoContainer">
+                <div class="streamContainer">
+                    <div class = "stream">
+                        <video id="stream"></video>
+                    </div>
+                    <div class="captureContainer">
+                        <canvas id = "capture"></canvas>
+                        <div id = "snapshot"></div>
                     </div>
                 </div>
-                <input class = "uploadImage" name = "image" type = file id = "image" accept = "image/*" required>
-                <label for = "image">Choose a file</label>
+                <button class = "cameraButton" type = "button" class ="button">Start Camera</button>
                 <input class = "caption" name = "caption" type = "text" placeholder = "Enter Caption">
-                <input class = "submit" type = submit value = Upload>
-            </form>
+                <input class = "cameraSubmit" type = submit value = Upload>
+            </div>  
         </div>
-
-        <div class = "photoContainer">
-            <div class="streamContainer">
-                <div class = "stream">
-                    <video id="stream"></video>
-                </div>
-                <div class="captureContainer">
-                    <canvas id = "capture"></canvas>
-                    <div id = "snapshot"></div>
-                </div>
-            </div>
-            <button class = "cameraButton" type = "button" class ="button">Start Camera</button>
-            <input class = "caption" name = "caption" type = "text" placeholder = "Enter Caption">
-            <input class = "cameraSubmit" type = submit value = Upload>
-        </div>  
     </body>
 </html>

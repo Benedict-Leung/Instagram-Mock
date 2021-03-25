@@ -1,4 +1,33 @@
 $(document).ready(function () {
+    window.location.replace("/addPost#uploadContainer");
+
+    var stream = document.getElementById("stream");
+    var capture = document.getElementById("capture");
+    var snapshot = document.getElementById("snapshot");
+
+    var cameraStream = null;
+    var started = false;
+    let takenPhoto = false;
+
+    $("#uploadButton").click(function () {
+        $(this).addClass("active");
+        $("#takeButton").removeClass("active");
+
+        if (cameraStream != null) {
+            var track = cameraStream.getTracks()[0];
+            track.stop();
+            stream.load();
+            cameraStream = null;
+            started = false;
+            $(".cameraButton").text("Start Camera");
+        }
+    });
+
+    $("#takeButton").click(function () {
+        $(this).addClass("active");
+        $("#uploadButton").removeClass("active");
+    }); 
+
     $(".uploadImage").change(function() {
         if (this.files && this.files[0]) {
             var reader = new FileReader();
@@ -11,13 +40,6 @@ $(document).ready(function () {
             reader.readAsDataURL(this.files[0]);
         }
     });
-    var stream = document.getElementById("stream");
-    var capture = document.getElementById("capture");
-    var snapshot = document.getElementById("snapshot");
-
-    var cameraStream = null;
-    var started = false;
-    let takenPhoto = false;
 
     $(".cameraButton").click(function() {
         if (!started) {
