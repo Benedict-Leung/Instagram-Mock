@@ -140,6 +140,7 @@
     border: 2px solid #D3D3D3;
     border-radius: 5vh;
     margin-bottom: 1vw;
+    overflow: hidden;
 }
 
 .uploadContainer form .preview .imageContainer {
@@ -148,7 +149,7 @@
 
 .uploadContainer form .preview img {
     max-width: 42vw;
-    height: auto;
+    max-height: 100%;
 }
 
 .uploadContainer form .preview .imageContainer img[alt] {
