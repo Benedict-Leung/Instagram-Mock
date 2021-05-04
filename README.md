@@ -1,4 +1,7 @@
-# CSCI2040Group
+# Instagram Mock Website
+
+## About
+This is a mock website that you can create account and share pictures from a local database
 
 ## Prerequisite
 ```bash
