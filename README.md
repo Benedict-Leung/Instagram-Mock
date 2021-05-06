@@ -3,6 +3,8 @@
 ## About
 This is a mock website that you can create account and share pictures from a local database
 
+![alt text](Instagram.png?raw=true)
+
 ## Prerequisite
 ```bash
 pip install flask
