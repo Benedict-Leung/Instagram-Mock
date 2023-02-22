@@ -1,7 +1,5 @@
 # Instagram Mock Website
 
-Website: https://instagram-mock.azurewebsites.net/login?next=%2F
-
 ## About
 This is a mock website that you can create account and share pictures from a local database
 
